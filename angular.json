@@ -25,9 +25,15 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/fonts/ionicons.min.css",
+              "src/assets/fonts/Login-Form-Clean.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/bootstrap/js/bootstrap.min.js",
+              "src/assets/js/current-day.js"
+            ]
           },
           "configurations": {
             "production": {
