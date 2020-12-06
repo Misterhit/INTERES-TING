@@ -7,6 +7,9 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CapacityViewComponent } from './capacity-view/capacity-view.component';
 import { HeaderComponent } from './header/header.component';
 import { QrAccessComponent } from './qr-access/qr-access.component';
+import {AppRoutingModule} from './app-routing.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +18,14 @@ import { QrAccessComponent } from './qr-access/qr-access.component';
     CalendarComponent,
     CapacityViewComponent,
     HeaderComponent,
-    QrAccessComponent
+    QrAccessComponent,
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
