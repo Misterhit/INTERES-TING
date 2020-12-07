@@ -9,23 +9,26 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class AuthComponent implements OnInit {
   signUpGroup: FormGroup;
   loginForm: FormGroup;
-
   isUserMode = false;
+  myMacAddress: string;
+  myPassword: string;
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.myPassword = this.genPassword();
+    this.myMacAddress = this.genMAC();
     this.signUpGroup = new FormGroup({
       room: new FormControl(null, [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(3),
+        Validators.min(1),
+        Validators.max(150),
       ]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(6),
+        Validators.minLength(8),
+        Validators.maxLength(8),
       ]),
       arrival: new FormControl(null, [
         Validators.required,
@@ -44,25 +47,62 @@ export class AuthComponent implements OnInit {
       ]),
       access: new FormControl(null, [
         Validators.required,
+        Validators.minLength(16),
+        Validators.maxLength(16),
+      ]),
+    });
+
+    this.loginForm = new FormGroup({
+      room: new FormControl(null, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(150),
+      ]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(8),
       ]),
     });
   }
 
   onSubmit() {
-    const room = this.signUpGroup.get('room').value;
-    const password = this.signUpGroup.get('password').value;
-    const arrival = this.signUpGroup.get('arrival').value;
-    const departure = this.signUpGroup.get('departure').value;
-    const breakfast = this.signUpGroup.get('breakfast').value;
-    const lunch = this.signUpGroup.get('lunch').value;
-    const dinner = this.signUpGroup.get('dinner').value;
-    const access = this.signUpGroup.get('access').value;
-    console.log(room, password, arrival, departure,
-      breakfast, lunch, dinner, access);
+    if (this.isUserMode) {
+      console.log(this.loginForm);
+    } else {
+      console.log(this.signUpGroup);
+    }
   }
 
   changeMode() {
     this.isUserMode = !this.isUserMode;
   }
+
+  genMAC() {
+    let hexDigits = '0123456789ABCDEF';
+    let macAddress = '';
+    for (let i = 0; i < 6; i++) {
+      macAddress += hexDigits.charAt(Math.round(Math.random() * 15));
+      macAddress += hexDigits.charAt(Math.round(Math.random() * 15));
+      if (i !== 5) {
+        macAddress += ':';
+      }
+    }
+    return macAddress;
+  }
+
+  genPassword() {
+    let abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '_', '$', '&', '#', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    let num = 8;
+    let random = 3;
+    let password = '';
+
+    for (let i = 0; i < num; i++) {
+      random = parseInt(String(Math.random() * abc.length));
+      password = password + abc[random];
+    }
+    return password;
+  }
+
 
 }

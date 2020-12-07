@@ -8,19 +8,22 @@
         <h2>Register customer</h2>
           <button class="btn btn-secondary" (click)="changeMode()">User Mode</button>
       </div>
-      <form  [formGroup]="signUpGroup">
+      <form  [formGroup]="signUpGroup" (ngSubmit)="onSubmit()">
         <div class="form-group"><label for="room">Room</label><input
           class="form-control item"
-          type="number" id="room"
+          type="number"
+          id="room"
           placeholder="Room number"
-          formControlName="room"
-        ></div>
+          formControlName="room">
+        </div>
         <div class="form-group"><label for="password">Secret password</label><input
           class="form-control item"
-          type="number"
+          type="text"
           id="password"
           placeholder="Password"
           formControlName="password"
+          [(ngModel)]= "myPassword"
+
         ></div>
         <!--div class="form-group"><label for="dni">DNI</label><input class="form-control item" type="text" id="dni"></div-->
         <div class="form-group"><label for="arrival">Arrival date</label><input
@@ -52,9 +55,9 @@
             class="form-control item"
             id="lunch"
             formControlName="lunch">
-            <option>12:00 - 13:00</option>
-            <option>13:15 - 14:15</option>
-            <option>14:30 - 15:30</option>
+            <option>12:00-13:00</option>
+            <option>13:15-14:15</option>
+            <option>14:30-15:30</option>
           </select>
         </div>
         <div class="form-group">
@@ -63,18 +66,20 @@
             class="form-control item"
             id="dinner"
             formControlName="dinner">
-            <option>18:45 - 19:45</option>
-            <option>20:00 - 21:00</option>
-            <option>21:15 - 22:15</option>
+            <option>18:45-19:45</option>
+            <option>20:00-21:00</option>
+            <option>21:15-22:15</option>
           </select>
         </div>
         <div class="form-group"><label for="access">Access code</label><input
           class="form-control item"
-          type="text" id="access"
+          type="text"
+          id="access"
           placeholder="Access code"
           formControlName="access"
-        ></div>
-        <div class="form-group"><button class="btn btn-primary btn-block btn-lg" type="button" (click)="onSubmit()">Register customer</button></div>
+          [(ngModel)]= "myMacAddress"
+         ></div>
+        <div class="form-group"><button class="btn btn-primary btn-block btn-lg" type="submit">Register customer</button></div>
       </form>
     </div>
   </section>
@@ -82,14 +87,26 @@
 
   <!--Login Form-->
 
-  <div class="login-clean"  *ngIf="isUserMode">
-    <form method="post">
+  <div class="login-clean" *ngIf="isUserMode">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2 class="sr-only">Customer access</h2>
       <button class="btn btn-secondary" (click)="changeMode()">Admin Mode</button>
       <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
-      <div class="form-group"><input class="form-control" type="room" name="room" placeholder="Room number"></div>
-      <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
-      <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div><a class="forgot" href="#">Do you need help?</a></form>
+      <div class="form-group"><input
+        class="form-control"
+        type="room"
+        name="room"
+        placeholder="Room number"
+        formControlName="room"></div>
+      <div class="form-group"><input
+        class="form-control"
+        type="password"
+        name="password"
+        placeholder="Password"
+        formControlName="password"></div>
+      <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
+      <a class="forgot" href="#">Do you need help?</a>
+    </form>
   </div>
 
 </main>
