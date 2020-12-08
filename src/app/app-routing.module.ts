@@ -5,6 +5,8 @@ import {QrAccessComponent} from './qr-access/qr-access.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import {CapacityViewComponent} from './capacity-view/capacity-view.component';
 import {HomeComponent} from './home/home.component';
+import {SignupComponent} from './signup/signup.component';
+import {LoginComponent} from './login/login.component';
 
 
 const routes: Routes = [
@@ -12,6 +14,12 @@ const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: 'auth', component: AuthComponent
+  },
+  {
+    path: 'signup', component: SignupComponent
+  },
+  {
+    path: 'login', component: LoginComponent
   },
   {
     path: 'home', component: HomeComponent

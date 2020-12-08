@@ -1,0 +1,28 @@
+<!--Login Form-->
+
+<div class="login-clean">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2 class="sr-only">Customer access</h2>
+    <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
+    <div class="form-group"><input
+      class="form-control"
+      type="room"
+      name="room"
+      placeholder="Room number"
+      formControlName="room">
+    <span *ngIf="!loginForm.get('room').valid && loginForm.get('room').touched"
+    class="help-block"> Please enter a number between 1 and 100!</span>
+    </div>
+    <div class="form-group"><input
+      class="form-control"
+      type="password"
+      name="password"
+      placeholder="Password"
+      formControlName="password">
+      <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched"
+            class="help-block"> Please enter a correct 8 length password!</span>
+    </div>
+    <div class="form-group"><button class="btn btn-primary btn-block" type="submit" [disabled]="!loginForm.valid">Log In</button></div>
+    <a class="forgot" href="#">Do you need help?</a>
+  </form>
+</div>

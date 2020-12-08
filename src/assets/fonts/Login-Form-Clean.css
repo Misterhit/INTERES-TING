@@ -4,7 +4,7 @@
 }
 
 .login-clean form {
-  max-width: 320px;
+  max-width: 400px;
   width: 90%;
   margin: 0 auto;
   background-color: #ffffff;
@@ -18,7 +18,7 @@
   text-align: center;
   padding: 0 0 20px;
   font-size: 100px;
-  color: rgb(244,71,107);
+  color: #ff4b4b;
 }
 
 .login-clean form .form-control {
@@ -34,7 +34,7 @@
 }
 
 .login-clean form .btn-primary {
-  background: #f4476b;
+  background: #ff4b4b;
   border: none;
   border-radius: 4px;
   padding: 11px;
@@ -45,7 +45,7 @@
 }
 
 .login-clean form .btn-primary:hover, .login-clean form .btn-primary:active {
-  background: #eb3b60;
+  background: #ff4b4b;
 }
 
 .login-clean form .btn-primary:active {
