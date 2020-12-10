@@ -6,7 +6,7 @@
         <h2 class="section-heading mb-4"><span class="section-heading-upper">Home Page</span><span class="section-heading-lower">Welcome!</span></h2>
         <p class="mb-3">Choose your role!</p>
         <div class="mx-auto intro-button" *ngIf="userMode"><a class="btn btn-primary d-inline-block mx-auto btn-xl" type="button"
-                                             (click)="onChangeMode(false)" >Go to Admin Mode</a></div>
+                                             (click)="onChangeMode(false)">Go to Admin Mode</a></div>
         <div class="mx-auto intro-button"  *ngIf="!userMode"><a class="btn btn-primary d-inline-block mx-auto btn-xl" type="button"
                                              (click)="onChangeMode(true)">Go to User Mode</a></div>
       </div>

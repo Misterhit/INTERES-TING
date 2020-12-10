@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthComponent} from './auth/auth.component';
 import {QrAccessComponent} from './qr-access/qr-access.component';
@@ -29,6 +29,9 @@ const routes: Routes = [
     path: 'qr_access',
     component: QrAccessComponent,
     canActivate: [AuthGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_USER'],
+    }
   },
   {
     path: 'calendar',
@@ -48,4 +51,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

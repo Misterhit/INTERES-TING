@@ -31,9 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log(this.loginForm);
-    await this.onLoginSync();
-
+      await this.onLoginSync();
   }
 
   async onLoginSync() {

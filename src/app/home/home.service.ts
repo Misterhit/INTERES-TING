@@ -13,5 +13,6 @@ export class HomeService {
 
   changeMode(changeMode: boolean) {
     this.isUserMode.next(changeMode);
+
   }
 }

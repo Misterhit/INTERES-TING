@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HomeService} from '../home/home.service';
 
 @Component({
   selector: 'app-qr-access',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QrAccessComponent implements OnInit {
 
-  constructor() { }
+  isUserMode: boolean;
+
+  constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
+    this.homeService.isUserMode.subscribe(value =>{
+      this.isUserMode = value;
+    });
   }
 
 }

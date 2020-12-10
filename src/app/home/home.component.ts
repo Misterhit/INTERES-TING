@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   loggedIn: boolean;
   userMode: boolean;
 
+
   constructor(private homeService: HomeService,
               private authService: AuthService,
               private changeDetector: ChangeDetectorRef,
@@ -36,11 +37,12 @@ export class HomeComponent implements OnInit {
     this.homeService.changeMode(userMode);
   }
 
+
   async onLogoutSync() {
     const success = await this.authService.logoutSync();
     if (success) {
       this.router.navigate(['home']);
-     }
+    }
   }
 
 }
