@@ -6,14 +6,14 @@
       <h2>Register customer</h2>
     </div>
     <form [formGroup]="signUpGroup" (ngSubmit)="onSubmit()">
-      <div class="form-group"><label for="room">Room</label><input
+      <div class="form-group"><label for="roomNumber">Room</label><input
         class="form-control item"
         type="number"
-        id="room"
+        id="roomNumber"
         placeholder="Room number"
-        formControlName="room">
-        <span *ngIf="!signUpGroup.get('room').valid && signUpGroup.get('room').touched"
-              class="help-block"> Please enter a number between 1 and 100!</span>
+        formControlName="roomNumber">
+        <span *ngIf="!signUpGroup.get('roomNumber').valid && signUpGroup.get('roomNumber').touched"
+              class="help-block"> Please enter a number between 1 and 150!</span>
 
       </div>
       <div class="form-group"><label for="password">Secret password</label><input
@@ -26,70 +26,59 @@
         <span *ngIf="!signUpGroup.get('password').valid && signUpGroup.get('password').touched"
               class="help-block"> Please enter a correct 8 length password!</span>
       </div>
-      <!--div class="form-group"><label for="dni">DNI</label><input class="form-control item" type="text" id="dni"></div-->
-      <div class="form-group"><label for="arrival">Arrival date</label><input
+      <div class="form-group"><label for="arrivalDate">Arrival date</label><input
         class="form-control item"
         type="date"
-        id="arrival"
-        formControlName="arrival">
-        <span *ngIf="!signUpGroup.get('arrival').valid && signUpGroup.get('arrival').touched"
-              class="help-block"> Please select one option!</span>
+        id="arrivalDate"
+        formControlName="arrivalDate">
       </div>
-      <div class="form-group"><label for="departure">Departure date</label><input
+      <div class="form-group"><label for="departureDate">Departure date</label><input
         class="form-control item"
         type="date"
-        id="departure"
-        formControlName="departure">
-        <span *ngIf="!signUpGroup.get('departure').valid && signUpGroup.get('departure').touched"
-              class="help-block"> Please select one option!</span>
+        id="departureDate"
+        formControlName="departureDate">
       </div>
       <div class="form-group">
-        <label for="breakfast">Breakfast</label>
+        <label for="breakfastTime">Breakfast</label>
         <select
           class="form-control item"
-          id="breakfast"
-          formControlName="breakfast">
-            <span *ngIf="!signUpGroup.get('breakfast').valid && signUpGroup.get('breakfast').touched"
-                  class="help-block"> Please select one option!</span>
+          id="breakfastTime"
+          formControlName="breakfastTime">
           <option>7:00-8:00</option>
           <option>8:15-9:15</option>
           <option>9:30-10:30</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="lunch">Lunch</label>
+        <label for="lunchTime">Lunch</label>
         <select
           class="form-control item"
-          id="lunch"
-          formControlName="lunch">
-              <span *ngIf="!signUpGroup.get('lunch').valid && signUpGroup.get('lunch').touched"
-                    class="help-block"> Please select one option!</span>
+          id="lunchTime"
+          formControlName="lunchTime">
           <option>12:00-13:00</option>
           <option>13:15-14:15</option>
           <option>14:30-15:30</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="dinner">Dinner</label>
+        <label for="dinnerTime">Dinner</label>
         <select
           class="form-control item"
-          id="dinner"
-          formControlName="dinner">
-            <span *ngIf="!signUpGroup.get('dinner').valid && signUpGroup.get('dinner').touched"
-                  class="help-block"> Please select one option!</span>
+          id="dinnerTime"
+          formControlName="dinnerTime">
           <option>18:45-19:45</option>
           <option>20:00-21:00</option>
           <option>21:15-22:15</option>
         </select>
       </div>
-      <div class="form-group"><label for="access">Access code</label><input
+      <div class="form-group"><label for="qrCode">Access code</label><input
         class="form-control item"
         type="text"
-        id="access"
+        id="qrCode"
         placeholder="Access code"
-        formControlName="access"
+        formControlName="qrCode"
         [(ngModel)]="myMacAddress">
-        <span *ngIf="!signUpGroup.get('access').valid && signUpGroup.get('access').touched"
+        <span *ngIf="!signUpGroup.get('qrCode').valid && signUpGroup.get('qrCode').touched"
               class="help-block"> Please enter a valid 16 digit Mac!</span>
       </div>
       <div class="form-group">

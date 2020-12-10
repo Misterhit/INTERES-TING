@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -8,18 +10,18 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
   signUpGroup: FormGroup;
-  isUserMode = false;
   myMacAddress: string;
   myPassword: string;
 
-  constructor() {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.myPassword = this.genPassword();
     this.myMacAddress = this.genMAC();
     this.signUpGroup = new FormGroup({
-      room: new FormControl(null, [
+      roomNumber: new FormControl(null, [
         Validators.required,
         Validators.min(1),
         Validators.max(150),
@@ -29,22 +31,22 @@ export class SignupComponent implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(8),
       ]),
-      arrival: new FormControl(null, [
+      arrivalDate: new FormControl(null, [
         Validators.required,
       ]),
-      departure: new FormControl(null, [
+      departureDate: new FormControl(null, [
         Validators.required,
       ]),
-      breakfast: new FormControl(null, [
+      breakfastTime: new FormControl(null, [
         Validators.required,
       ]),
-      lunch: new FormControl(null, [
+      lunchTime: new FormControl(null, [
         Validators.required,
       ]),
-      dinner: new FormControl(null, [
+      dinnerTime: new FormControl(null, [
         Validators.required,
       ]),
-      access: new FormControl(null, [
+      qrCode: new FormControl(null, [
         Validators.required,
         Validators.minLength(17),
         Validators.maxLength(17),
@@ -53,14 +55,29 @@ export class SignupComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  async onSubmit() {
     console.log(this.signUpGroup);
+    await this.onSignUpSync();
+    await this.onLogoutSync();
   }
 
-
-  changeMode() {
-    this.isUserMode = !this.isUserMode;
+  async onSignUpSync() {
+    const roomNumber = this.signUpGroup.get('roomNumber').value.toString();
+    const password = this.signUpGroup.get('password').value;
+    const arrivalDate = this.signUpGroup.get('arrivalDate').value;
+    const departureDate = this.signUpGroup.get('departureDate').value;
+    const breakfastTime = this.signUpGroup.get('breakfastTime').value;
+    const lunchTime = this.signUpGroup.get('lunchTime').value;
+    const dinnerTime = this.signUpGroup.get('dinnerTime').value;
+    const qrCode = this.signUpGroup.get('qrCode').value;
+    const success = await this.authService.signUpSync(roomNumber, password, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
+    if (success) {
+      this.router.navigate(['home']);
+    } else {
+      console.log('Error en el registro');
+    }
   }
+
 
   genMAC() {
     let hexDigits = '0123456789ABCDEF';
@@ -88,5 +105,11 @@ export class SignupComponent implements OnInit {
     return password;
   }
 
+  async onLogoutSync() {
+    const success = await this.authService.logoutSync();
+    if (success) {
+      this.router.navigate(['auth']);
+    }
+  }
 
 }

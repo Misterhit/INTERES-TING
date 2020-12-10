@@ -7,6 +7,7 @@ import {CapacityViewComponent} from './capacity-view/capacity-view.component';
 import {HomeComponent} from './home/home.component';
 import {SignupComponent} from './signup/signup.component';
 import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './auth/auth.guard';
 
 
 const routes: Routes = [
@@ -27,10 +28,12 @@ const routes: Routes = [
   {
     path: 'qr_access',
     component: QrAccessComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'calendar',
     component: CalendarComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'capacity',

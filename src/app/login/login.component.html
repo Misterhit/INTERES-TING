@@ -6,12 +6,12 @@
     <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
     <div class="form-group"><input
       class="form-control"
-      type="room"
-      name="room"
+      type="number"
+      name="roomNumber"
       placeholder="Room number"
-      formControlName="room">
-    <span *ngIf="!loginForm.get('room').valid && loginForm.get('room').touched"
-    class="help-block"> Please enter a number between 1 and 100!</span>
+      formControlName="roomNumber">
+    <span *ngIf="!loginForm.get('roomNumber').valid && loginForm.get('roomNumber').touched"
+    class="help-block"> Please enter a number between 1 and 150!</span>
     </div>
     <div class="form-group"><input
       class="form-control"
