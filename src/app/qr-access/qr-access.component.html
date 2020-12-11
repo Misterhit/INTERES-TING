@@ -18,12 +18,16 @@
             </div>
           </div>
 
-          <div *ngIf="isUserMode">
+          <div *ngIf="!isLoading">
+            <p>Loading Qr code...</p>
+          </div>
+
+          <div *ngIf="isUserMode && loggedIn && isLoading">
             <h2 class="section-heading mb-0"><span class="section-heading-upper">Your QR code customer!</span><span
-              class="section-heading-lower">Room number X</span></h2>
+              class="section-heading-lower">Room number {{userRoomObj.roomNumber}}</span></h2>
             <br>
             <img class="img-fluid d-flex mx-auto product-item-img mb-3 mb-lg-0 rounded"
-                 src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl=ff:55:33">
+                 src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl={{userRoomObj.qrCode}}">
             <div class="bg-faded p-5 rounded">
               <p class="mb-0">We take pride in our work, and it shows. Every time you order a beverage from us, we
                 guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan

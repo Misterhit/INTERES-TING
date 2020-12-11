@@ -1,6 +1,7 @@
 export class User {
 
   public roomNumber: string;
+  public refId: string;
   public arrivalDate: string;
   public departureDate: string;
   public breakfastTime: string;

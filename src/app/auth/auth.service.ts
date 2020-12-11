@@ -44,7 +44,7 @@ export class AuthService {
       const falseEmail = roomNumber + '@InteresTING.hotel';
       const newUser = await firebase.auth().createUserWithEmailAndPassword(falseEmail, password);
       this.currentID = newUser.user.uid;
-      this.postUser(roomNumber, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
+      this.postUser(roomNumber, this.currentID, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
       return true;
       //this.loggedIn.next(false);
     } catch (err) {
@@ -56,6 +56,7 @@ export class AuthService {
   }
 
   postUser(userRoomNumber: string,
+           userRefId: string,
            userArrivalDate: string,
            userDepartureDate: string,
            userBreakfast: string,
@@ -65,6 +66,7 @@ export class AuthService {
     const usernameRef = this.fireDB.object('rooms/' + userRoomNumber);
     usernameRef.set({
       roomNumber: userRoomNumber,
+      RefId: userRefId,
       arrivalDate: userArrivalDate,
       departureDate: userDepartureDate,
       breakfastTime: userBreakfast,
@@ -93,7 +95,6 @@ export class AuthService {
       await firebase.auth().signOut();
       this.loggedIn.next(false);
       this.setUID(null);
-      window.location.reload();
       return true;
     } catch (err) {
       console.log(err);
@@ -110,6 +111,22 @@ export class AuthService {
   getUID() {
     return this.currentID;
   }
+
+  getRoom(UID: string) {
+    return this.fireDB
+      .list('rooms', (ref) => {
+        return ref.orderByChild('RefId').equalTo(UID); //Filtro
+      })
+      .valueChanges();
+  }
+
+  getRoomObj(roomNumber: string){
+    return this.fireDB
+      .object('rooms/' + roomNumber)
+      .valueChanges();
+
+  }
+
 
 }
 

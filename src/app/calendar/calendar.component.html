@@ -1,1 +1,11 @@
 <p>calendar works!</p>
+
+<div *ngIf="!isLoading">
+  <p>Loading Calendar...</p>
+</div>
+
+<div *ngIf="isUserMode && loggedIn && isLoading">
+
+{{userRoomObj.dinnerTime}}
+
+</div>
