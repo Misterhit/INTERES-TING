@@ -11,7 +11,7 @@
                                              (click)="onChangeMode(true)">Go to User Mode</a></div>
       </div>
 
-      <div *ngIf="userMode">
+      <div *ngIf="userMode || loggedIn">
 
         <p>You are in user mode!</p>
       </div>

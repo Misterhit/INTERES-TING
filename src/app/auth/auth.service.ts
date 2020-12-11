@@ -93,6 +93,7 @@ export class AuthService {
       await firebase.auth().signOut();
       this.loggedIn.next(false);
       this.setUID(null);
+      window.location.reload();
       return true;
     } catch (err) {
       console.log(err);
