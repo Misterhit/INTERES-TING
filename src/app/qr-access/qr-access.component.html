@@ -18,6 +18,7 @@
             </div>
           </div>
 
+          <div *ngIf="isUserMode && loggedIn">
           <div *ngIf="!isLoading">
             <p>Loading Qr code...</p>
           </div>
@@ -34,6 +35,7 @@
                 Cappuccino, a refreshing iced herbal tea, or something
                 as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p>
             </div>
+          </div>
           </div>
 
         </div>
