@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../auth/user.model';
 import {HomeService} from '../home/home.service';
 import {AuthService} from '../auth/auth.service';
@@ -41,6 +41,20 @@ export class CalendarComponent implements OnInit {
             console.log(this.userRoomObj);
           });
       });
+  }
+
+
+  getDate() {
+    const arrayOfWeekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const dateObj = new Date();
+    const weekdayNumber = dateObj.getDay();
+    const weekdayName = arrayOfWeekdays[weekdayNumber];
+
+    const date = dateObj.getFullYear() + '/' + (dateObj.getMonth() + 1) + '/' + dateObj.getDate();
+    return weekdayName + " - "  + date;
 
   }
+
 }
+

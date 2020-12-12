@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
     const success = await this.authService.logoutSync();
     if (success) {
       this.router.navigate(['home']);
+      window.location.reload();
     }
   }
 

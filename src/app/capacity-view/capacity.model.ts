@@ -1,7 +1,8 @@
 export class Capacity {
 
-  public gym: string;
-  public pool: string;
+  public id: string;
+  public totalCapacity: string;
+  public currentNumber: string;
 
   constructor() {
 
