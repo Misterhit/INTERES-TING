@@ -10,11 +10,7 @@ export class CapacityViewService {
   }
 
 
-  getCapacity() {
-    return this.fireDB
-      .object('controlAforo').valueChanges();
-  }
-  getPlace(id: string){
+  getCapacity(id: string){
     return this.fireDB
       .object('controlAforo/' + id)
       .valueChanges();

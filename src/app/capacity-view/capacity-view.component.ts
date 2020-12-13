@@ -16,10 +16,10 @@ export class CapacityViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.capacityService.getPlace('gym').subscribe((gym: Capacity) => {
+    this.capacityService.getCapacity('gym').subscribe((gym: Capacity) => {
       this.gymCapacity = gym;
       console.log(this.gymCapacity);
-      this.capacityService.getPlace('pool').subscribe((pool: Capacity) => {
+      this.capacityService.getCapacity('pool').subscribe((pool: Capacity) => {
         this.poolCapacity = pool;
         console.log(this.poolCapacity);
       });

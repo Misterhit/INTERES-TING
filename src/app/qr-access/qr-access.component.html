@@ -5,11 +5,23 @@
         <div class="d-flex mr-auto bg-faded p-5 rounded">
 
           <div *ngIf="!isUserMode">
-            <h2 class="section-heading mb-0"><span class="section-heading-upper">Your admin master QR code!</span><span
+            <form [formGroup]="adminForm" (ngSubmit)="onSearchQrCode()">
+              <input
+                class="form-control"
+                type="number"
+                name="roomNumber"
+                placeholder="Search for a room QR code"
+                formControlName="roomNumber">
+              <span *ngIf="!adminForm.get('roomNumber').valid && adminForm.get('roomNumber').touched"
+                    class="help-block"> Please enter a number between 1 and 150!</span>
+            </form>
+            <br>
+            <br>
+            <h2 class="section-heading mb-0"><span class="section-heading-upper">Your admin master QR code of Room number {{adminRoomNumber}}</span><span
               class="section-heading-lower">Use it wisely! </span></h2>
             <br>
             <img class="img-fluid d-flex mx-auto product-item-img mb-3 mb-lg-0 rounded"
-                 src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl=Master Code">
+                 src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl={{adminQrcode}}">
             <div class="bg-faded p-5 rounded">
               <p class="mb-0">We take pride in our work, and it shows. Every time you order a beverage from us, we
                 guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan
@@ -19,29 +31,30 @@
           </div>
 
           <div *ngIf="isUserMode && loggedIn">
-          <div *ngIf="!isLoading">
-            <p>Loading Qr code...</p>
-          </div>
-
-          <div *ngIf="isUserMode && loggedIn && isLoading">
-            <h2 class="section-heading mb-0"><span class="section-heading-upper">Your QR code customer!</span><span
-              class="section-heading-lower">Room number {{userRoomObj.roomNumber}}</span></h2>
-            <br>
-            <img class="img-fluid d-flex mx-auto product-item-img mb-3 mb-lg-0 rounded"
-                 src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl={{userRoomObj.qrCode}}">
-            <div class="bg-faded p-5 rounded">
-              <p class="mb-0">We take pride in our work, and it shows. Every time you order a beverage from us, we
-                guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan
-                Cappuccino, a refreshing iced herbal tea, or something
-                as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p>
+            <div *ngIf="!isLoading">
+              <p>Loading Qr code...</p>
             </div>
-          </div>
+
+            <div *ngIf="isUserMode && loggedIn && isLoading">
+              <h2 class="section-heading mb-0"><span class="section-heading-upper">Your QR code customer!</span><span
+                class="section-heading-lower">Room number {{userRoomObj.roomNumber}}</span></h2>
+              <br>
+              <img class="img-fluid d-flex mx-auto product-item-img mb-3 mb-lg-0 rounded"
+                   src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl={{userRoomObj.qrCode}}">
+              <div class="bg-faded p-5 rounded">
+                <p class="mb-0">We take pride in our work, and it shows. Every time you order a beverage from us, we
+                  guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan
+                  Cappuccino, a refreshing iced herbal tea, or something
+                  as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p>
+              </div>
+            </div>
           </div>
 
         </div>
       </div>
     </div>
   </div>
+
 </section>
 <section class="page-section"></section>
 <section class="page-section">

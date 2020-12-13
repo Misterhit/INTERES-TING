@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Router} from '@angular/router';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFireDatabase, snapshotChanges} from '@angular/fire/database';
 import firebase from 'firebase';
+import {root} from 'rxjs/internal-compatibility';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AuthService {
         this.setUID(user.uid);
         this.currentID2.next(user.uid);
         this.loggedIn.next(true);
-      }else{
+      } else {
         this.loggedIn.next(false);
         this.setUID(null);
       }
@@ -120,13 +121,11 @@ export class AuthService {
       .valueChanges();
   }
 
-  getRoomObj(roomNumber: string){
+  getRoomObj(roomNumber: string) {
     return this.fireDB
       .object('rooms/' + roomNumber)
       .valueChanges();
-
   }
-
-
 }
+
 
