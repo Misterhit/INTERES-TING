@@ -2,6 +2,7 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
+import firebase from "firebase";
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-      await this.onLoginSync();
+    await this.onLoginSync();
   }
 
   async onLoginSync() {
@@ -39,13 +40,13 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.get('password').value;
     const success = await this.authService.loginSync(roomNumber, password);
     if (success) {
-      this.router.navigate(['qr_access']);
-    } else {
-      console.log('Error en el login');
-      //this.showErrorAlert(this.error);
-    }
+      await this.router.navigate(['home']);
+    }else {
+      alert('Login error, check the room or the password!');
 
+    }
   }
 
-
 }
+
+

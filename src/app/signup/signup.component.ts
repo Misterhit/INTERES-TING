@@ -70,11 +70,17 @@ export class SignupComponent implements OnInit {
     const lunchTime = this.signUpGroup.get('lunchTime').value;
     const dinnerTime = this.signUpGroup.get('dinnerTime').value;
     const qrCode = this.signUpGroup.get('qrCode').value;
-    const success = await this.authService.signUpSync(roomNumber, password, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
+    const success = await this.authService.signUpSync(
+      roomNumber,
+      password,
+      arrivalDate,
+      departureDate,
+      breakfastTime,
+      lunchTime,
+      dinnerTime,
+      qrCode);
     if (success) {
-      this.router.navigate(['home']);
-    } else {
-      console.log('Error en el registro');
+      await this.router.navigate(['home']);
     }
   }
 
@@ -108,7 +114,7 @@ export class SignupComponent implements OnInit {
   async onLogoutSync() {
     const success = await this.authService.logoutSync();
     if (success) {
-      this.router.navigate(['auth']);
+      await this.router.navigate(['auth']);
     }
   }
 

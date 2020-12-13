@@ -1,0 +1,24 @@
+<br>
+<div class="row">
+  <div class="col-xl-9 mx-auto">
+    <div style="text-align: center">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th scope="col">Existing Rooms</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let room of userRoomNumber; let i = index">
+              <th scope="row">Room nº{{room.roomNumber}}</th>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

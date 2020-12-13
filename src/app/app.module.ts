@@ -15,6 +15,7 @@ import {LoginComponent} from './login/login.component';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import { FooterComponent } from './footer/footer.component';
+import { AdminSearchComponent } from './admin-search/admin-search.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FooterComponent } from './footer/footer.component';
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    FooterComponent
+    FooterComponent,
+    AdminSearchComponent
   ],
   imports: [
     BrowserModule,

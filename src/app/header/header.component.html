@@ -18,9 +18,10 @@
       <ul class="nav navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/capacity">Capacity view</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/calendar">Calendar</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/qr_access">QR code</a></li>
-        <li class="nav-item" *ngIf="!loggedIn"><a class="nav-link" routerLink="/auth">User Access</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/calendar">{{isUserMode ? 'Customer Calendar':'Admin Calendar'}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/qr_access">{{isUserMode ? 'Customer QR code':'Admin Qr code'}}</a></li>
+        <li class="nav-item" *ngIf="!isUserMode"><a class="nav-link" routerLink="/admin">Admin Knowledge</a></li>
+        <li class="nav-item" *ngIf="!loggedIn"><a class="nav-link" routerLink="/auth">{{isUserMode ? 'Login':'Register'}}</a></li>
         <li class="nav-item" *ngIf="loggedIn"><a class="nav-link" routerLink="" (click)="onLogoutSync()">Logout</a></li>
       </ul>
     </div>

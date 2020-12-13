@@ -3,7 +3,7 @@ import {HomeService} from '../home/home.service';
 import {AuthService} from '../auth/auth.service';
 import {User} from '../auth/user.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AdminSearchService} from '../admin/admin-search.service';
+import {RetrieveDataService} from '../retrieve-data/retrieve-data.service';
 
 @Component({
   selector: 'app-qr-access',
@@ -26,7 +26,7 @@ export class QrAccessComponent implements OnInit {
 
   constructor(private homeService: HomeService,
               private authService: AuthService,
-              private adminSearch: AdminSearchService) {
+              private retrieveDataService: RetrieveDataService) {
   }
 
   @ViewChild('input', {static: false}) input: ElementRef;
@@ -43,10 +43,10 @@ export class QrAccessComponent implements OnInit {
       this.uid = value;
     });
     if (this.isUserMode && this.loggedIn) {
-      this.authService.getRoom(this.uid).subscribe(
+      this.authService.getUserRoom(this.uid).subscribe(
         (room: User[]) => {
           this.userRoom = room;
-          this.authService.getRoomObj(this.userRoom[0].roomNumber).subscribe(
+          this.retrieveDataService.getRoomObj(this.userRoom[0].roomNumber).subscribe(
             (obj: User) => {
               this.userRoomObj = obj;
               this.isLoading = true;
@@ -62,10 +62,10 @@ export class QrAccessComponent implements OnInit {
           Validators.max(150),
         ]),
       });
-      this.adminSearch.adminQrCode.subscribe(value => {
+      this.retrieveDataService.adminQrCode.subscribe(value => {
         this.adminQrcode = value;
       });
-      this.adminSearch.adminRoomNumber.subscribe(value => {
+      this.retrieveDataService.adminRoomNumber.subscribe(value => {
         this.adminRoomNumber = value;
       });
     }
@@ -73,7 +73,7 @@ export class QrAccessComponent implements OnInit {
 
   onSearchQrCode() {
     const roomNumber = this.adminForm.get('roomNumber').value.toString();
-    this.adminSearch.generalSearch(roomNumber);
+    this.retrieveDataService.generalAdminSearch(roomNumber);
   }
 }
 

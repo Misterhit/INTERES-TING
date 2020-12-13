@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Router} from '@angular/router';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFireDatabase, snapshotChanges} from '@angular/fire/database';
+import {AngularFireDatabase} from '@angular/fire/database';
 import firebase from 'firebase';
-import {root} from 'rxjs/internal-compatibility';
 
 @Injectable({
   providedIn: 'root'
@@ -43,16 +42,20 @@ export class AuthService {
     qrCode: string): Promise<boolean> {
     try {
       const falseEmail = roomNumber + '@InteresTING.hotel';
-      const newUser = await firebase.auth().createUserWithEmailAndPassword(falseEmail, password);
-      this.currentID = newUser.user.uid;
-      this.postUser(roomNumber, this.currentID, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
-      return true;
-      //this.loggedIn.next(false);
+      firebase.database()
+        .ref('rooms/' + roomNumber).once('value')
+        .then(async res => {
+          if (!res.exists()) {
+            const newUser = await firebase.auth().createUserWithEmailAndPassword(falseEmail, password);
+            this.currentID = newUser.user.uid;
+            this.postUser(roomNumber, this.currentID, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
+            return true;
+          } else {
+            alert("This room is taken!");
+          }
+        });
     } catch (err) {
-      console.log(err);
       return false;
-      //this.loggedIn.next(false);
-      //this.error.next(err.message);
     }
   }
 
@@ -84,10 +87,8 @@ export class AuthService {
       this.loggedIn.next(true);
       return true;
     } catch (err) {
-      console.log(err);
       this.loggedIn.next(false);
       return false;
-      //this.error.next(err.message);
     }
   }
 
@@ -101,7 +102,6 @@ export class AuthService {
       console.log(err);
       this.loggedIn.next(true);
       return false;
-      //this.error.next(err.message);
     }
   }
 
@@ -113,7 +113,7 @@ export class AuthService {
     return this.currentID;
   }
 
-  getRoom(UID: string) {
+  getUserRoom(UID: string) {
     return this.fireDB
       .list('rooms', (ref) => {
         return ref.orderByChild('RefId').equalTo(UID); //Filtro
@@ -121,11 +121,6 @@ export class AuthService {
       .valueChanges();
   }
 
-  getRoomObj(roomNumber: string) {
-    return this.fireDB
-      .object('rooms/' + roomNumber)
-      .valueChanges();
-  }
 }
 
 

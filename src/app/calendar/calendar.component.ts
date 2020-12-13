@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../auth/user.model';
 import {HomeService} from '../home/home.service';
 import {AuthService} from '../auth/auth.service';
-import {QrAccessComponent} from '../qr-access/qr-access.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AdminSearchService} from '../admin/admin-search.service';
+import {RetrieveDataService} from '../retrieve-data/retrieve-data.service';
 
 @Component({
   selector: 'app-calendar',
@@ -25,7 +24,7 @@ export class CalendarComponent implements OnInit {
 
   constructor(private homeService: HomeService,
               private authService: AuthService,
-              private adminSearch: AdminSearchService) {
+              private retrieveDataService: RetrieveDataService) {
   }
 
   ngOnInit(): void {
@@ -39,10 +38,10 @@ export class CalendarComponent implements OnInit {
       this.uid = value;
     });
     if (this.isUserMode && this.loggedIn) {
-      this.authService.getRoom(this.uid).subscribe(
+      this.authService.getUserRoom(this.uid).subscribe(
         (room: User[]) => {
           this.userRoom = room;
-          this.authService.getRoomObj(this.userRoom[0].roomNumber).subscribe(
+          this.retrieveDataService.getRoomObj(this.userRoom[0].roomNumber).subscribe(
             (obj: User) => {
               this.userRoomObj = obj;
               this.isLoading = true;
@@ -57,10 +56,10 @@ export class CalendarComponent implements OnInit {
           Validators.max(150),
         ]),
       });
-      this.adminSearch.adminObservableCalendar.subscribe(value => {
+      this.retrieveDataService.adminObservableCalendar.subscribe(value => {
         this.adminCalendar = value;
       });
-      this.adminSearch.adminRoomNumber.subscribe(value => {
+      this.retrieveDataService.adminRoomNumber.subscribe(value => {
         this.adminRoomNumber = value;
       });
     }
@@ -68,7 +67,7 @@ export class CalendarComponent implements OnInit {
 
   onSearchCalendar(){
     const roomNumber = this.adminForm.get('roomNumber').value.toString();
-    this.adminSearch.generalSearch(roomNumber);
+    this.retrieveDataService.generalAdminSearch(roomNumber);
 
   }
 

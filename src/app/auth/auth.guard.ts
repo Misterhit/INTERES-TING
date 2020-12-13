@@ -11,7 +11,6 @@ import {HomeService} from '../home/home.service';
 })
 export class AuthGuard implements CanActivate {
 
-  isUserMode: boolean;
 
   constructor(private authService: AuthService,
               private router: Router,
