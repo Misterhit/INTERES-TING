@@ -75,7 +75,7 @@ export class SignupComponent implements OnInit {
             const b = a.getTime();
             const d = c.getTime();
 
-            if ((d - b) > 0) {
+            if ((d - b) >= 0) {
               const breakfastTime = this.signUpGroup.get('breakfastTime').value;
               const lunchTime = this.signUpGroup.get('lunchTime').value;
               const dinnerTime = this.signUpGroup.get('dinnerTime').value;
