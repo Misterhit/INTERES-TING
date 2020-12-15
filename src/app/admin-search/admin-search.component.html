@@ -1,5 +1,10 @@
 <br>
-<div class="row">
+<div *ngIf="!isLoading">
+  <app-spinner></app-spinner>
+  <br>
+</div>
+
+<div class="row" *ngIf="isLoading">
   <div class="col-xl-9 mx-auto">
     <div style="text-align: center">
       <div class="row">
@@ -13,6 +18,7 @@
             <tbody>
             <tr *ngFor="let room of userRoomNumber; let i = index">
               <th scope="row">Room nº{{room.roomNumber}}</th>
+              <!--td><button class="btn btn-danger" (click)="onRemove(room.roomNumber.toString())">x</button></td-->
             </tr>
             </tbody>
           </table>
@@ -20,5 +26,7 @@
       </div>
     </div>
   </div>
-
 </div>
+
+
+

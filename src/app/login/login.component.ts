@@ -1,8 +1,7 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
-import firebase from "firebase";
 
 @Component({
   selector: 'app-login',
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
     const success = await this.authService.loginSync(roomNumber, password);
     if (success) {
       await this.router.navigate(['home']);
-    }else {
+    } else {
       alert('Login error, check the room or the password!');
 
     }

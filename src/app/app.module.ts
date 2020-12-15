@@ -14,8 +14,9 @@ import {SignupComponent} from './signup/signup.component';
 import {LoginComponent} from './login/login.component';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import { FooterComponent } from './footer/footer.component';
-import { AdminSearchComponent } from './admin-search/admin-search.component';
+import {FooterComponent} from './footer/footer.component';
+import {AdminSearchComponent} from './admin-search/admin-search.component';
+import {SpinnerComponent} from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AdminSearchComponent } from './admin-search/admin-search.component';
     SignupComponent,
     LoginComponent,
     FooterComponent,
-    AdminSearchComponent
+    AdminSearchComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

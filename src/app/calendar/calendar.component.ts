@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../auth/user.model';
 import {HomeService} from '../home/home.service';
 import {AuthService} from '../auth/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RetrieveDataService} from '../retrieve-data/retrieve-data.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   isUserMode: boolean;
   loggedIn: boolean;
   uid: string;
@@ -20,6 +21,10 @@ export class CalendarComponent implements OnInit {
   userRoom: User[] = [];
   userRoomObj: User = new User();
   adminForm: FormGroup;
+  closeSub: Subscription[] = [];
+  sub1: Subscription;
+  sub2: Subscription;
+  sub3: Subscription;
 
 
   constructor(private homeService: HomeService,
@@ -38,7 +43,7 @@ export class CalendarComponent implements OnInit {
       this.uid = value;
     });
     if (this.isUserMode && this.loggedIn) {
-      this.authService.getUserRoom(this.uid).subscribe(
+      this.sub1 = this.authService.getUserRoom(this.uid).subscribe(
         (room: User[]) => {
           this.userRoom = room;
           this.retrieveDataService.getRoomObj(this.userRoom[0].roomNumber).subscribe(
@@ -47,6 +52,7 @@ export class CalendarComponent implements OnInit {
               this.isLoading = true;
             });
         });
+      this.closeSub.push(this.sub1);
     }
     if (!this.isUserMode && !this.loggedIn) {
       this.adminForm = new FormGroup({
@@ -56,16 +62,17 @@ export class CalendarComponent implements OnInit {
           Validators.max(150),
         ]),
       });
-      this.retrieveDataService.adminObservableCalendar.subscribe(value => {
+      this.sub2 = this.retrieveDataService.adminObservableCalendar.subscribe(value => {
         this.adminCalendar = value;
       });
-      this.retrieveDataService.adminRoomNumber.subscribe(value => {
+      this.sub3 = this.retrieveDataService.adminRoomNumber.subscribe(value => {
         this.adminRoomNumber = value;
       });
+      this.closeSub.push(this.sub2, this.sub3);
     }
   }
 
-  onSearchCalendar(){
+  onSearchCalendar() {
     const roomNumber = this.adminForm.get('roomNumber').value.toString();
     this.retrieveDataService.generalAdminSearch(roomNumber);
 
@@ -81,6 +88,12 @@ export class CalendarComponent implements OnInit {
     const date = dateObj.getFullYear() + '/' + (dateObj.getMonth() + 1) + '/' + dateObj.getDate();
     return weekdayName + ' - ' + date;
 
+  }
+
+  ngOnDestroy(): void {
+    this.closeSub.forEach(value => {
+      value.unsubscribe();
+    });
   }
 
 }

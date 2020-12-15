@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {BehaviorSubject} from 'rxjs';
+import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
+import {BehaviorSubject, Observable} from 'rxjs';
 import firebase from 'firebase';
 import {User} from '../auth/user.model';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,16 @@ export class RetrieveDataService {
   adminCalendar: string[] = [];
   adminObservableCalendar: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   adminRoomNumber: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  itemsRef: AngularFireList<any>;
+  items: Observable<any[]>;
 
   constructor(private fireDB: AngularFireDatabase) {
+    this.itemsRef = fireDB.list('rooms');
+    this.items = this.itemsRef.snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
+      )
+    );
   }
 
 
@@ -53,5 +62,9 @@ export class RetrieveDataService {
           alert('The room entered does not exist in our database!');
         }
       });
+  }
+
+  deleteComment(key: string) {
+    this.itemsRef.remove(key);
   }
 }

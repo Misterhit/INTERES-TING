@@ -1,16 +1,17 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HomeService} from '../home/home.service';
 import {AuthService} from '../auth/auth.service';
 import {User} from '../auth/user.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RetrieveDataService} from '../retrieve-data/retrieve-data.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-qr-access',
   templateUrl: './qr-access.component.html',
   styleUrls: ['./qr-access.component.css']
 })
-export class QrAccessComponent implements OnInit {
+export class QrAccessComponent implements OnInit, OnDestroy {
 
   isUserMode: boolean;
   loggedIn: boolean;
@@ -22,6 +23,10 @@ export class QrAccessComponent implements OnInit {
   userRoomObj: User = new User();
   adminQrcode: string;
   adminRoomNumber: string;
+  closeSub: Subscription[] = [];
+  sub1: Subscription;
+  sub2: Subscription;
+  sub3: Subscription;
 
 
   constructor(private homeService: HomeService,
@@ -43,7 +48,7 @@ export class QrAccessComponent implements OnInit {
       this.uid = value;
     });
     if (this.isUserMode && this.loggedIn) {
-      this.authService.getUserRoom(this.uid).subscribe(
+      this.sub1 = this.authService.getUserRoom(this.uid).subscribe(
         (room: User[]) => {
           this.userRoom = room;
           this.retrieveDataService.getRoomObj(this.userRoom[0].roomNumber).subscribe(
@@ -53,6 +58,7 @@ export class QrAccessComponent implements OnInit {
               console.log(this.userRoomObj);
             });
         });
+      this.closeSub.push(this.sub1);
     }
     if (!this.isUserMode && !this.loggedIn) {
       this.adminForm = new FormGroup({
@@ -62,12 +68,13 @@ export class QrAccessComponent implements OnInit {
           Validators.max(150),
         ]),
       });
-      this.retrieveDataService.adminQrCode.subscribe(value => {
+      this.sub2 = this.retrieveDataService.adminQrCode.subscribe(value => {
         this.adminQrcode = value;
       });
-      this.retrieveDataService.adminRoomNumber.subscribe(value => {
+      this.sub3 = this.retrieveDataService.adminRoomNumber.subscribe(value => {
         this.adminRoomNumber = value;
       });
+      this.closeSub.push(this.sub2, this.sub3);
     }
   }
 
@@ -75,6 +82,15 @@ export class QrAccessComponent implements OnInit {
     const roomNumber = this.adminForm.get('roomNumber').value.toString();
     this.retrieveDataService.generalAdminSearch(roomNumber);
   }
+
+  ngOnDestroy(): void {
+    console.log("destroy");
+    this.closeSub.forEach(value => {
+      value.unsubscribe();
+    });
+  }
+
+
 }
 
 

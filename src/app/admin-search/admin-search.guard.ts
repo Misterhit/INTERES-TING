@@ -26,7 +26,6 @@ export class AdminSearchGuard implements CanActivate {
     if (this.homeService.isUserMode.getValue() === false) {
       return true;
     }
-    alert("You are not an Admin! Get out!!");
     this.router.navigate(['/home']);
   }
 

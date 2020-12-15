@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HomeService} from "../home/home.service";
+import {HomeService} from '../home/home.service';
 
 @Component({
   selector: 'app-header',

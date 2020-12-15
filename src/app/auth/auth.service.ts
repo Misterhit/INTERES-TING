@@ -42,18 +42,10 @@ export class AuthService {
     qrCode: string): Promise<boolean> {
     try {
       const falseEmail = roomNumber + '@InteresTING.hotel';
-      firebase.database()
-        .ref('rooms/' + roomNumber).once('value')
-        .then(async res => {
-          if (!res.exists()) {
-            const newUser = await firebase.auth().createUserWithEmailAndPassword(falseEmail, password);
-            this.currentID = newUser.user.uid;
-            this.postUser(roomNumber, this.currentID, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
-            return true;
-          } else {
-            alert("This room is taken!");
-          }
-        });
+      const newUser = await firebase.auth().createUserWithEmailAndPassword(falseEmail, password);
+      this.currentID = newUser.user.uid;
+      this.postUser(roomNumber, this.currentID, arrivalDate, departureDate, breakfastTime, lunchTime, dinnerTime, qrCode);
+      return true;
     } catch (err) {
       return false;
     }
@@ -116,7 +108,7 @@ export class AuthService {
   getUserRoom(UID: string) {
     return this.fireDB
       .list('rooms', (ref) => {
-        return ref.orderByChild('RefId').equalTo(UID); //Filtro
+        return ref.orderByChild('RefId').equalTo(UID);
       })
       .valueChanges();
   }

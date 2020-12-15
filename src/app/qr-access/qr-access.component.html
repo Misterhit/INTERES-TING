@@ -1,9 +1,14 @@
 <section class="page-section">
   <div class="container">
+    <div *ngIf="!isLoading && isUserMode && loggedIn">
+      <app-spinner></app-spinner>
+    </div>
+
     <div class="product-item">
       <div class="d-flex product-item-title">
         <div class="d-flex mr-auto bg-faded p-5 rounded">
 
+          <!--Admin mode begin-->
           <div *ngIf="!isUserMode">
             <form [formGroup]="adminForm" (ngSubmit)="onSearchQrCode()">
               <input
@@ -29,12 +34,11 @@
                 as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p>
             </div>
           </div>
+          <!--Admin mode end-->
 
+
+          <!--User mode begin-->
           <div *ngIf="isUserMode && loggedIn">
-            <div *ngIf="!isLoading">
-              <p>Loading Qr code...</p>
-            </div>
-
             <div *ngIf="isUserMode && loggedIn && isLoading">
               <h2 class="section-heading mb-0"><span class="section-heading-upper">Your QR code customer!</span><span
                 class="section-heading-lower">Room number {{userRoomObj.roomNumber}}</span></h2>
@@ -49,6 +53,8 @@
               </div>
             </div>
           </div>
+          <!--User mode end-->
+
 
         </div>
       </div>
@@ -56,9 +62,4 @@
   </div>
 
 </section>
-<section class="page-section"></section>
-<section class="page-section">
-  <div class="container">
-    <div class="product-item"></div>
-  </div>
-</section>
+

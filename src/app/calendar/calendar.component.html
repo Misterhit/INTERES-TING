@@ -1,7 +1,13 @@
+<div *ngIf="!isLoading && isUserMode && loggedIn">
+  <br><br><br>
+  <app-spinner></app-spinner>
+</div>
 
-<div *ngIf="!isUserMode && !loggedIn">
-  <section class="page-section cta" style="background: #ff4b4b">
-    <div class="container">
+<section class="page-section cta" style="background: #ff4b4b">
+  <div class="container">
+
+    <!--Admin mode begin-->
+    <div *ngIf="!isUserMode && !loggedIn">
       <form [formGroup]="adminForm" (ngSubmit)="onSearchCalendar()">
         <input
           class="form-control"
@@ -16,12 +22,17 @@
       <div class="row">
         <div class="col-xl-9 mx-auto">
           <div class="cta-inner text-center rounded">
-            <h2 class="section-heading mb-5"><span class="section-heading-upper">This is your Admin Calendar of Room number {{adminRoomNumber}}</span><br><span class="section-heading-lower">{{getDate()}}</span></h2>
+            <h2 class="section-heading mb-5"><span class="section-heading-upper">This is your Admin Calendar of Room number {{adminRoomNumber}}</span><br><span
+              class="section-heading-lower">{{getDate()}}</span></h2>
             <ul class="list-unstyled mx-auto list-hours mb-5 text-left">
-              <li class="d-flex list-unstyled-item list-hours-item">Breakfast<span class="ml-auto">{{adminCalendar[0]}}</span></li>
-              <li class="d-flex list-unstyled-item list-hours-item">Lunch<span class="ml-auto">{{adminCalendar[1]}}</span></li>
-              <li class="d-flex list-unstyled-item list-hours-item">Dinner<span class="ml-auto">{{adminCalendar[2]}}</span></li>
-              <li class="d-flex list-unstyled-item list-hours-item">Other activities<span class="ml-auto">Future implementations!</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Breakfast<span
+                class="ml-auto">{{adminCalendar[0]}}</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Lunch<span
+                class="ml-auto">{{adminCalendar[1]}}</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Dinner<span
+                class="ml-auto">{{adminCalendar[2]}}</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Other activities<span class="ml-auto">Future implementations!</span>
+              </li>
             </ul>
             <p class="address mb-5"><em><strong>Calle León y Castillo</strong><span><br>Las Palmas</span></em></p>
             <p class="address mb-0"><em><em>Call Anytime</em></em><span><br>(+34) 666-666-666</span></p>
@@ -29,28 +40,26 @@
         </div>
       </div>
     </div>
-  </section>
-</div>
+    <!--Admin mode End-->
 
 
-
-<div *ngIf="isUserMode && loggedIn">
-<div *ngIf="!isLoading">
-  <p>Loading Calendar...</p>
-</div>
-<div *ngIf="isUserMode && loggedIn && isLoading">
-
-  <section class="page-section cta" style="background: #ff4b4b">
-    <div class="container">
-      <div class="row">
+    <!--User mode begin-->
+    <div *ngIf="isUserMode && loggedIn">
+      <div class="row" *ngIf="isUserMode && loggedIn && isLoading">
         <div class="col-xl-9 mx-auto">
           <div class="cta-inner text-center rounded">
-            <h2 class="section-heading mb-5"><span class="section-heading-upper">This is your personal Calendar</span><br><span class="section-heading-lower">{{getDate()}}</span></h2>
+            <h2 class="section-heading mb-5"><span
+              class="section-heading-upper">This is your personal Calendar</span><br><span
+              class="section-heading-lower">{{getDate()}}</span></h2>
             <ul class="list-unstyled mx-auto list-hours mb-5 text-left">
-              <li class="d-flex list-unstyled-item list-hours-item">Breakfast<span class="ml-auto">{{userRoomObj.breakfastTime}}</span></li>
-              <li class="d-flex list-unstyled-item list-hours-item">Lunch<span class="ml-auto">{{userRoomObj.lunchTime}}</span></li>
-              <li class="d-flex list-unstyled-item list-hours-item">Dinner<span class="ml-auto">{{userRoomObj.dinnerTime}}</span></li>
-              <li class="d-flex list-unstyled-item list-hours-item">Other activities<span class="ml-auto"> Consult to admin </span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Breakfast<span
+                class="ml-auto">{{userRoomObj.breakfastTime}}</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Lunch<span
+                class="ml-auto">{{userRoomObj.lunchTime}}</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Dinner<span
+                class="ml-auto">{{userRoomObj.dinnerTime}}</span></li>
+              <li class="d-flex list-unstyled-item list-hours-item">Other activities<span class="ml-auto"> Consult to admin </span>
+              </li>
             </ul>
             <p class="address mb-5"><em><strong>Calle León y Castillo</strong><span><br>Las Palmas</span></em></p>
             <p class="address mb-0"><em><em>Call Anytime</em></em><span><br>(+34) 666-666-666</span></p>
@@ -58,8 +67,9 @@
         </div>
       </div>
     </div>
-  </section>
+    <!--User mode end-->
 
-</div>
-</div>
+  </div>
+
+</section>
 

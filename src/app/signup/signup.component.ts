@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-signup',
@@ -58,35 +59,52 @@ export class SignupComponent implements OnInit {
   async onSubmit() {
     console.log(this.signUpGroup);
     await this.onSignUpSync();
-    await this.onLogoutSync();
   }
 
   async onSignUpSync() {
     const roomNumber = this.signUpGroup.get('roomNumber').value.toString();
-    const password = this.signUpGroup.get('password').value;
-    const arrivalDate = this.signUpGroup.get('arrivalDate').value;
-    const departureDate = this.signUpGroup.get('departureDate').value;
-    const breakfastTime = this.signUpGroup.get('breakfastTime').value;
-    const lunchTime = this.signUpGroup.get('lunchTime').value;
-    const dinnerTime = this.signUpGroup.get('dinnerTime').value;
-    const qrCode = this.signUpGroup.get('qrCode').value;
-    const success = await this.authService.signUpSync(
-      roomNumber,
-      password,
-      arrivalDate,
-      departureDate,
-      breakfastTime,
-      lunchTime,
-      dinnerTime,
-      qrCode);
-    if (success) {
-      await this.router.navigate(['home']);
-    }
+    firebase.database()
+      .ref('rooms/' + roomNumber).once('value')
+      .then(async res => {
+          if (!res.exists()) {
+            const password = this.signUpGroup.get('password').value;
+            const arrivalDate = this.signUpGroup.get('arrivalDate').value;
+            const departureDate = this.signUpGroup.get('departureDate').value;
+            const a = new Date(arrivalDate);
+            const c = new Date(departureDate);
+            const b = a.getTime();
+            const d = c.getTime();
+
+            if ((d - b) > 0) {
+              const breakfastTime = this.signUpGroup.get('breakfastTime').value;
+              const lunchTime = this.signUpGroup.get('lunchTime').value;
+              const dinnerTime = this.signUpGroup.get('dinnerTime').value;
+              const qrCode = this.signUpGroup.get('qrCode').value;
+              const success = await this.authService.signUpSync(
+                roomNumber,
+                password,
+                arrivalDate,
+                departureDate,
+                breakfastTime,
+                lunchTime,
+                dinnerTime,
+                qrCode);
+              if (success) {
+                await this.onLogoutSync();
+              }
+            } else {
+              alert("Departure date can not be minor than the Arrival date!");
+            }
+          } else {
+            alert("This room is taken!");
+          }
+        }
+      );
   }
 
 
   genMAC() {
-    let hexDigits = '0123456789ABCDEF';
+    const hexDigits = '0123456789ABCDEF';
     let macAddress = '';
     for (let i = 0; i < 6; i++) {
       macAddress += hexDigits.charAt(Math.round(Math.random() * 15));
@@ -99,8 +117,8 @@ export class SignupComponent implements OnInit {
   }
 
   genPassword() {
-    let abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '_', '$', '&', '#', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    let num = 8;
+    const abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '_', '$', '&', '#', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    const num = 8;
     let random = 3;
     let password = '';
 
@@ -114,7 +132,7 @@ export class SignupComponent implements OnInit {
   async onLogoutSync() {
     const success = await this.authService.logoutSync();
     if (success) {
-      await this.router.navigate(['auth']);
+      await this.router.navigate(['home']);
     }
   }
 
