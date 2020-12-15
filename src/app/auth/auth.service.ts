@@ -20,7 +20,6 @@ export class AuthService {
 
     this.fireAuth.onAuthStateChanged(user => {
       if (user) {
-        console.log(user);
         this.setUID(user.uid);
         this.currentID2.next(user.uid);
         this.loggedIn.next(true);

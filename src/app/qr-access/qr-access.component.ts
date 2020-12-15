@@ -55,7 +55,6 @@ export class QrAccessComponent implements OnInit, OnDestroy {
             (obj: User) => {
               this.userRoomObj = obj;
               this.isLoading = true;
-              console.log(this.userRoomObj);
             });
         });
       this.closeSub.push(this.sub1);
@@ -84,7 +83,6 @@ export class QrAccessComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("destroy");
     this.closeSub.forEach(value => {
       value.unsubscribe();
     });
